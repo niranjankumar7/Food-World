@@ -1,0 +1,126 @@
+<div
+  class="registerPage"
+  style="
+    width: 100%;
+    height: 150vh;
+    background: white;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  "
+>
+  <div
+    class="jumbotron"
+    style="
+      padding: 10px;
+      background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+        url(../../assets/img/Mainbackground.jpg);
+      background-size: cover;
+      height: 30vh;
+      background-repeat: no-repeat;
+      color: white;
+      text-align: center;
+    "
+  >
+    <div class="jumbotron-text" style="margin-top: 20px; font-size: x-large">
+      <h2>
+        {{ staff.role}}<br />
+        {{ staff.name }}<br />
+        
+      </h2>
+      <br /><br />
+      <button
+        type="button"
+        class="btn btn-danger btn-lg btn-block"
+        style="width: 28%"
+        (click)="logout()"
+      >
+        LOGOUT
+      </button>
+      <br /><br />
+    </div>
+    <div class="container">
+      <div class="orders" style="margin-top: 30px">
+        <button
+          type="button"
+          class="btn btn-success btn-lg btn-block"
+          [routerLink]="['/create-order']"
+          style="width: 40%; font-size: large; margin-bottom: 20px"
+        >
+          CREATE FOOD ORDER
+        </button>
+        
+       
+
+        <div class="row row-cols-1 row-cols-md-4 g-2">
+          <!-- ngFor in this div to repeat the cards -->
+          <div
+            class="col"
+            *ngFor="let fo of allOrders.data"
+          >
+            <div class="card">
+              <div class="card-body" style="color: black">
+                
+                <h5 class="card-title">Order ID : {{ fo.id }}</h5>
+                <h6>Name of the Customer : {{ fo.customerName }}</h6>
+                <h6>Contact Number : {{ fo.contactNumber }}</h6>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  Total Amount : {{ fo.totalPrice }}
+                </li>
+                <li class="list-group-item">
+                  Created At : {{ fo.orderCreatedTime }}
+                </li>
+                <li class="list-group-item">
+                  Delivered At : {{ fo.orderDeliveryTime }}
+                </li>
+                <div
+                  class="card-footer text-success"
+                  style="text-align: center; font-size: xx-large"
+                >
+                  <select
+                    class="form-control"
+                    id="inputSelect"
+                    name="status"
+                    [(ngModel)]="fo.status"
+                    (ngModelChange)="changeStatus($event, fo.id)"
+                  >
+                    <option value="confirmed">Confirmed</option>
+                    <option value="Prepared">Order Prepared</option>
+                    <option value="delivered">Delivered</option>
+                  </select>
+                </div>
+              </ul>
+
+              <div class="card-body text-center">
+                <button
+                  class="btn btn-dark"
+                  style="width: 200px"
+                  [routerLink]="['/bill/', fo.id]"
+                >
+                  View Bill</button
+                ><br /><br />
+                <button
+                  class="btn btn-dark"
+                  style="width: 200px"
+                  [routerLink]="['/edit-order/', fo.id]"
+                >
+                  Edit Details
+                </button>
+                <br /><br />
+                <button
+                  class="btn btn-dark"
+                  style="width: 200px"
+                  (click)="deleteFoodOrder(fo.id)"
+                >
+                  Delete Order
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
